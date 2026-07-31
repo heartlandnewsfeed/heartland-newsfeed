@@ -21,3 +21,5 @@ Heartland Newsfeed Android App
 ## Added plugin repositories
 
 ## Build attempt 11
+
+## Minimal Gradle config
