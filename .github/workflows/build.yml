@@ -16,30 +16,15 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     
-    - name: Download Gradle wrapper files
-      run: |
-        mkdir -p gradle/wrapper
-        
-        # Download gradle-wrapper.properties
-        curl -L https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.properties -o gradle/wrapper/gradle-wrapper.properties
-        
-        # Download gradle-wrapper.jar
-        curl -L https://repo.gradle.org/gradle/distributions/gradle-8.1-wrapper.zip -o gradle-wrapper.zip
-        unzip -j gradle-wrapper.zip "gradle-8.1/gradle/wrapper/gradle-wrapper.jar" -d gradle/wrapper/
-        rm gradle-wrapper.zip
-        
-        # Download gradlew scripts
-        curl -L https://raw.githubusercontent.com/gradle/gradle/master/gradlew -o gradlew
-        curl -L https://raw.githubusercontent.com/gradle/gradle/master/gradlew.bat -o gradlew.bat
-        
-        chmod +x gradlew
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
     
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
+      run: gradle assembleDebug
     
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: build/outputs/apk/debug/app-debug.apk
         retention-days: 30
