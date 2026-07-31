@@ -23,3 +23,5 @@ Heartland Newsfeed Android App
 ## Build attempt 11
 
 ## Minimal Gradle config
+
+## Using Gradle 8.4
