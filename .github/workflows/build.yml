@@ -15,17 +15,24 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-
-    - name: Download Gradle wrapper
+    
+    - name: Download Gradle wrapper files
       run: |
         mkdir -p gradle/wrapper
+        
+        # Download gradle-wrapper.properties
         curl -L https://raw.githubusercontent.com/gradle/gradle/master/gradle/wrapper/gradle-wrapper.properties -o gradle/wrapper/gradle-wrapper.properties
+        
+        # Download gradle-wrapper.jar
+        curl -L https://repo.gradle.org/gradle/distributions/gradle-8.1-wrapper.zip -o gradle-wrapper.zip
+        unzip -j gradle-wrapper.zip "gradle-8.1/gradle/wrapper/gradle-wrapper.jar" -d gradle/wrapper/
+        rm gradle-wrapper.zip
+        
+        # Download gradlew scripts
         curl -L https://raw.githubusercontent.com/gradle/gradle/master/gradlew -o gradlew
         curl -L https://raw.githubusercontent.com/gradle/gradle/master/gradlew.bat -o gradlew.bat
+        
         chmod +x gradlew
-    
-    - name: Make Gradle executable
-      run: chmod +x ./gradlew
     
     - name: Build with Gradle
       run: ./gradlew assembleDebug
